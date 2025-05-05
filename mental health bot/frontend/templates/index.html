@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindGuide AI</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="app-header">
+            <h1 class="logo">MindGuide <span class="ai-span">AI</span></h1>
+            <div id="auth-status">
+                <span id="user-info" style="display: none;"></span>
+                <button id="logout-button" style="display: none;">Logout</button>
+            </div>
+        </header>
+
+        <div id="auth-forms" class="auth-container">
+            <div id="login-form-container">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <input type="text" id="login-username" placeholder="Username" required autocomplete="username">
+                    <input type="password" id="login-password" placeholder="Password" required autocomplete="current-password">
+                    <button type="submit">Login</button>
+                    <p class="auth-switch">Don't have an account? <a href="#" id="show-register">Register here</a></p>
+                </form>
+                 <p id="login-error" class="error-message"></p>
+            </div>
+
+            <div id="register-form-container" style="display: none;">
+                <h2>Register</h2>
+                <form id="register-form">
+                    <input type="text" id="register-username" placeholder="Username" required autocomplete="username">
+                    <input type="email" id="register-email" placeholder="Email" required autocomplete="email">
+                    <input type="text" id="register-fullname" placeholder="Full Name (Optional)" autocomplete="name">
+                    <input type="password" id="register-password" placeholder="Password" required autocomplete="new-password">
+                    <button type="submit">Register</button>
+                     <p class="auth-switch">Already have an account? <a href="#" id="show-login">Login here</a></p>
+                </form>
+                <p id="register-error" class="error-message"></p>
+                 <p id="register-success" class="success-message"></p>
+            </div>
+        </div>
+
+        <div id="chat-container" style="display: none;">
+             <p class="disclaimer-top">
+                <strong>Important:</strong> This is an AI for exploration, not a diagnosis tool. Consult a professional for medical advice.
+            </p>
+            <div id="chat-box">
+                </div>
+            <div id="input-area">
+                <textarea id="message-input" placeholder="Type your message..." rows="2"></textarea>
+                <button id="send-button">Send</button>
+            </div>
+             <p id="chat-error" class="error-message"></p>
+        </div>
+
+        <footer>
+            <p>MindGuide AI &copy; 2025 - For informational purposes only.</p>
+        </footer>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+/* Basic Reset & Body */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+    padding: 20px; /* Add padding for smaller screens */
+}
+
+.container {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 650px; /* Limit width */
+    display: flex;
+    flex-direction: column;
+    height: 85vh; /* Limit height */
+    max-height: 700px;
+}
+
+/* Header */
+.app-header {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.8em;
+    font-weight: normal;
+}
+
+.logo .ai-span {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+#auth-status {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9em;
+}
+
+#logout-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: background-color 0.3s ease;
+}
+
+#logout-button:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Auth Forms */
+.auth-container {
+    padding: 30px 40px;
+    flex-grow: 1; /* Allow auth forms to take space */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Stack forms vertically */
+    justify-content: center; /* Center content vertically */
+}
+
+#login-form-container,
+#register-form-container {
+    width: 100%;
+    max-width: 400px; /* Limit form width */
+    margin: 0 auto; /* Center form horizontally */
+}
+
+.auth-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4a4a4a;
+    font-weight: 600;
+}
+
+.auth-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-container input[type="text"],
+.auth-container input[type="email"],
+.auth-container input[type="password"] {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s ease;
+}
+
+.auth-container input:focus {
+    outline: none;
+    border-color: #2575fc;
+    box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+}
+
+.auth-container button {
+    padding: 12px 20px;
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.auth-container button:hover {
+    opacity: 0.9;
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.auth-switch a {
+    color: #2575fc;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+
+/* Chat Interface */
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Take remaining space */
+    overflow: hidden; /* Prevent content spill */
+    padding: 0; /* Remove padding if header/footer handle it */
+}
+
+.disclaimer-top {
+    background-color: #fffbe6; /* Light yellow */
+    color: #8a6d3b; /* Dark yellow/brown */
+    border-bottom: 1px solid #f5e79e;
+    padding: 10px 20px;
+    font-size: 0.85em;
+    text-align: center;
+}
+.disclaimer-top strong {
+    color: #c09853;
+}
+
+#chat-box {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scrollbar-width: thin;
+    scrollbar-color: #bbb #eee;
+}
+
+/* Scrollbar styling for WebKit browsers */
+#chat-box::-webkit-scrollbar {
+    width: 8px;
+}
+#chat-box::-webkit-scrollbar-track {
+    background: #eee;
+    border-radius: 4px;
+}
+#chat-box::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 4px;
+    border: 2px solid #eee;
+}
+
+
+.message {
+    padding: 10px 15px;
+    border-radius: 18px;
+    max-width: 75%;
+    line-height: 1.5;
+    word-wrap: break-word; /* Ensure long words break */
+}
+
+.message.user {
+    background-color: #e0e0e0;
+    color: #333;
+    border-bottom-right-radius: 5px;
+    align-self: flex-end; /* Align user messages to the right */
+    margin-left: auto; /* Push to right */
+}
+
+.message.ai {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border-bottom-left-radius: 5px;
+    align-self: flex-start; /* Align AI messages to the left */
+    margin-right: auto; /* Push to left */
+}
+
+/* Make AI messages potentially wider */
+.message.ai {
+    max-width: 85%;
+}
+
+
+#input-area {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    background-color: #f9f9f9;
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    resize: none; /* Disable manual resizing */
+    font-size: 1em;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 10px;
+    line-height: 1.4;
+    height: auto; /* Start with auto height */
+    min-height: 40px; /* Minimum height for one line */
+    max-height: 100px; /* Maximum height before scrolling */
+    overflow-y: auto; /* Allow scrolling within textarea */
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: #2575fc;
+    box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+}
+
+
+#send-button {
+    background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    border: none;
+    border-radius: 50%; /* Make it round */
+    width: 45px;
+    height: 45px;
+    font-size: 1.3em; /* Adjust icon size */
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Remove padding if using icon */
+}
+
+#send-button:hover {
+    opacity: 0.9;
+}
+
+/* Add a simple send icon using text or SVG/FontAwesome later */
+#send-button::before {
+    content: '➤'; /* Simple arrow icon */
+    transform: translateX(1px); /* Adjust position */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 10px;
+    font-size: 0.8em;
+    color: #888;
+    background-color: #f1f1f1;
+    border-top: 1px solid #eee;
+}
+
+/* Error/Success Messages */
+.error-message {
+    color: #d9534f; /* Red */
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.success-message {
+    color: #5cb85c; /* Green */
+    font-size: 0.9em;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Responsive Adjustments (Example) */
+@media (max-width: 600px) {
+    .container {
+        height: 95vh; /* Use more height on small screens */
+        border-radius: 0;
+        max-height: none;
+    }
+    .app-header {
+        padding: 10px 15px;
+    }
+    .logo {
+        font-size: 1.5em;
+    }
+    #auth-status {
+        font-size: 0.8em;
+    }
+    .auth-container {
+        padding: 20px;
+    }
+    #chat-box {
+        padding: 15px;
+    }
+    #input-area {
+        padding: 10px 15px;
+    }
+    #message-input {
+        padding: 8px 12px;
+    }
+    #send-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1em;
+    }
+}

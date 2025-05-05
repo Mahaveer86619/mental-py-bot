@@ -1,0 +1,12 @@
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0 # For settings management
+python-dotenv>=1.0.0
+passlib[bcrypt]>=1.7.4
+python-jose[cryptography]>=3.3.0
+google-generativeai>=0.4.0 # Check for latest version
+httpx>=0.25.0 # Often used by libraries like google-generativeai or for async requests
+jinja2>=3.0.0 # For templates
+python-multipart>=0.0.5 # For file uploads
+pydantic[email]>=2.0.0 # For email validation
