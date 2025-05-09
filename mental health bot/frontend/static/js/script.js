@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsPopup = document.getElementById("results-popup");
   const resultsContent = document.getElementById("results-content");
   const newTestButton = document.getElementById("new-test-button");
+  const emergencyContactButton = document.getElementById(
+    "emergency-contact-button"
+  );
 
   // --- State ---
   let bearerToken = localStorage.getItem("bearerToken");
@@ -390,6 +393,52 @@ document.addEventListener("DOMContentLoaded", () => {
     chatBox.innerHTML = ""; // Clear chat history
     messageInput.value = ""; // Clear input
     await startChatSession(); // Start new chat session
+  });
+
+  emergencyContactButton.addEventListener("click", async () => {
+    // Extract user info
+    const userName =
+      userInfo.textContent.replace("Logged in as: ", "") || "User";
+    // Extract condition and severity from results
+    const scoreLine =
+      resultsContent.querySelector(".result-score")?.textContent || "";
+    const severityLine =
+      resultsContent.querySelector(".result-severity")?.textContent || "";
+    const severity = severityLine.split(":")[1]?.trim() || "";
+    // Try to extract condition from scoreLine or fallback
+    let condition = "Unknown";
+    if (scoreLine.toLowerCase().includes("depression"))
+      condition = "Depression";
+    else if (scoreLine.toLowerCase().includes("anxiety")) condition = "Anxiety";
+    else if (scoreLine.toLowerCase().includes("stress")) condition = "Stress";
+    // Extract recommendations
+    const recommendationsList = resultsContent.querySelectorAll(
+      ".recommendations li"
+    );
+    const recommendations = Array.from(recommendationsList).map(
+      (li) => li.textContent
+    );
+
+    // Hardcoded recipient email for demo
+    const receiverEmail = "psatyam86619@gmail.com";
+
+    try {
+      await apiCall(
+        "/chat/emergency_contact",
+        "POST",
+        {
+          user_name: userName,
+          receiver_email: receiverEmail,
+          condition,
+          severity,
+          recommendations,
+        },
+        true
+      );
+      alert("Emergency contact has been notified via email.");
+    } catch (error) {
+      alert("Failed to send emergency contact email: " + error.message);
+    }
   });
 
   // --- Initial Check ---

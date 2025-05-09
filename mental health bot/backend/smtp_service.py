@@ -9,97 +9,119 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def create_email_template(company_name="Your Company", team_name="The Team"):
+def create_email_template(user_name, condition, severity, recommendations):
     """
-    Creates an HTML email template.
+    Creates an HTML email template for emergency contact.
 
     Args:
-        company_name (str, optional): The name of the company. Defaults to "Your Company".
-        team_name (str, optional): The name of the team sending the email. Defaults to "The Team".
+        user_name (str): The user's name or username.
+        condition (str): The mental health condition assessed.
+        severity (str): The severity result.
+        recommendations (list): List of recommendations for the recipient.
 
     Returns:
         str: The HTML email template as a string.
     """
+    recommendations_html = "".join(f"<li>{rec}</li>" for rec in recommendations)
     html = f"""
     <!DOCTYPE html>
     <html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Monthly Newsletter</title>
+        <title>MindGuide AI - Emergency Alert</title>
         <style>
             body {{
                 font-family: Arial, sans-serif;
-                line-height: 1.6;
-                color: #333333;
+                background: #f5f7fa;
+                color: #333;
                 margin: 0;
                 padding: 0;
             }}
             .container {{
                 max-width: 600px;
-                margin: 0 auto;
-                padding: 20px;
+                margin: 30px auto;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+                overflow: hidden;
             }}
             .header {{
-                background-color: #4285f4;
-                color: white;
-                padding: 20px;
+                background: #dc3545;
+                color: #fff;
+                padding: 24px 32px;
                 text-align: center;
             }}
             .content {{
+                padding: 32px;
+            }}
+            .result-section {{
+                background: #f8f9fa;
+                border-radius: 8px;
                 padding: 20px;
-                background-color: #ffffff;
+                margin-bottom: 24px;
+                border-left: 6px solid #2575fc;
+            }}
+            .result-label {{
+                font-weight: bold;
+                color: #2575fc;
+            }}
+            .severity {{
+                font-size: 1.2em;
+                font-weight: bold;
+                color: #dc3545;
+                margin-bottom: 10px;
+            }}
+            .recommendations {{
+                margin-top: 20px;
+                background: #e9f7ef;
+                border-radius: 8px;
+                padding: 18px;
+            }}
+            .recommendations h3 {{
+                margin-top: 0;
+                color: #218838;
             }}
             .footer {{
-                background-color: #f2f2f2;
-                padding: 10px;
+                background: #f2f2f2;
+                color: #888;
                 text-align: center;
-                font-size: 12px;
-                color: #777777;
-            }}
-            .button {{
-                display: inline-block;
-                background-color: #4285f4;
-                color: white;
-                padding: 10px 20px;
-                text-decoration: none;
-                border-radius: 5px;
-                margin: 20px 0;
-            }}
-            h1, h2 {{
-                color: #333333;
+                font-size: 0.95em;
+                padding: 16px;
             }}
         </style>
     </head>
     <body>
         <div class="container">
             <div class="header">
-                <h1>{company_name} Newsletter</h1>
-                <p>May 2025 Edition</p>
+                <h1>Emergency Alert from MindGuide AI</h1>
             </div>
             <div class="content">
-                <h2>Hello from Our Team!</h2>
-                <p>We hope this email finds you well. Here are our latest updates:</p>
-                
-                <h3>What's New</h3>
-                <ul>
-                    <li>New product launch coming next month</li>
-                    <li>Our team expanded with 5 new members</li>
-                    <li>Office relocation scheduled for June</li>
-                </ul>
-                
-                <p>We're excited to share that our Q1 results exceeded expectations with a 15% growth in revenue.</p>
-                
-                <a href="https://www.example.com/details" class="button">Read More</a>
-                
-                <p>Thank you for your continued support!</p>
-                <p>Best regards,<br>{team_name}</p>
+                <p>Dear Emergency Contact,</p>
+                <p>
+                    <b>{user_name}</b> has completed a mental health assessment using MindGuide AI.
+                    The results indicate the following:
+                </p>
+                <div class="result-section">
+                    <div><span class="result-label">Condition:</span> {condition}</div>
+                    <div class="severity">Severity: {severity}</div>
+                </div>
+                <div class="recommendations">
+                    <h3>Recommended Actions for You</h3>
+                    <ul>
+                        {recommendations_html}
+                    </ul>
+                </div>
+                <p>
+                    Please reach out to <b>{user_name}</b> as soon as possible to provide support and care.
+                    If you believe they are in immediate danger, contact emergency services.
+                </p>
+                <p>
+                    <i>This message was sent automatically by MindGuide AI for the safety and well-being of its users.</i>
+                </p>
             </div>
             <div class="footer">
-                <p>© 2025 {company_name}. All rights reserved.</p>
-                <p>You're receiving this email because you subscribed to our newsletter.</p>
-                <p><a href="https://www.example.com/unsubscribe">Unsubscribe</a></p>
-                <p>Sent on: {datetime.now().strftime("%B %d, %Y")}</p>
+                Sent on: {datetime.now().strftime("%B %d, %Y %H:%M")}
             </div>
         </div>
     </body>
@@ -148,6 +170,16 @@ if __name__ == "__main__":
     # Example usage
     sender_email = "mahaveer86619.dev@gmail.com"
     receiver_email = "psatyam86619@gmail.com"
-    subject = "Monthly Newsletter - May 2025"
-    html_template = create_email_template()
+    subject = "Emergency Alert - MindGuide AI"
+    user_name = "John Doe"
+    condition = "Anxiety"
+    severity = "High"
+    recommendations = [
+        "Contact John immediately to check on his well-being.",
+        "Encourage John to seek professional help.",
+        "Provide emotional support and listen to his concerns.",
+    ]
+    html_template = create_email_template(
+        user_name, condition, severity, recommendations
+    )
     send_email(subject, sender_email, receiver_email, html_template)
