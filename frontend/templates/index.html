@@ -90,6 +90,50 @@
         </div>
       </div>
 
+      <div id="dashboard-container" style="display: none" class="dashboard">
+        <div class="dashboard-header">
+          <h2>Welcome to Your Mental Health Dashboard</h2>
+          <p>Choose a test or view your progress</p>
+        </div>
+
+        <div class="test-cards">
+          <div class="test-card" data-test="1">
+            <h3>Depression Test</h3>
+            <p>Evaluate symptoms of depression</p>
+            <button class="start-test-btn">Start Test</button>
+          </div>
+          <div class="test-card" data-test="2">
+            <h3>Anxiety Test</h3>
+            <p>Assess anxiety levels</p>
+            <button class="start-test-btn">Start Test</button>
+          </div>
+          <div class="test-card" data-test="3">
+            <h3>Stress Test</h3>
+            <p>Measure stress levels</p>
+            <button class="start-test-btn">Start Test</button>
+          </div>
+        </div>
+
+        <div class="dashboard-sections">
+          <div class="progress-section">
+            <h3>Your Progress</h3>
+            <div class="chart-container">
+              <canvas id="progressChart"></canvas>
+            </div>
+          </div>
+
+          <div class="emergency-contacts">
+            <h3>Emergency Contacts</h3>
+            <div class="contacts-list" id="contactsList">
+              <!-- Contacts will be loaded here -->
+            </div>
+            <button id="addContactBtn" class="add-contact-btn">
+              Add Contact
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div id="chat-container" style="display: none">
         <p class="disclaimer-top">
           <strong>Important:</strong> This is an AI for exploration, not a

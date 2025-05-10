@@ -29,6 +29,15 @@ document.addEventListener("DOMContentLoaded", () => {
     "emergency-contact-button"
   );
 
+  const dashboardContainer = document.getElementById("dashboard-container");
+  const testCards = document.querySelectorAll(".test-card");
+  const addContactBtn = document.getElementById("addContactBtn");
+
+  // Add Chart.js script dynamically
+  const chartScript = document.createElement("script");
+  chartScript.src = "https://cdn.jsdelivr.net/npm/chart.js";
+  document.head.appendChild(chartScript);
+
   // --- State ---
   let bearerToken = localStorage.getItem("bearerToken");
   let chatInitialized = false; // Track if /chat/start has been called successfully
@@ -49,10 +58,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const showView = (view) => {
     authForms.style.display = "none";
     chatContainer.style.display = "none";
+    dashboardContainer.style.display = "none";
     if (view === "auth") {
       authForms.style.display = "flex"; // Use flex for centering
     } else if (view === "chat") {
       chatContainer.style.display = "flex"; // Use flex for layout
+    } else if (view === "dashboard") {
+      dashboardContainer.style.display = "block";
     }
   };
 
@@ -274,10 +286,8 @@ document.addEventListener("DOMContentLoaded", () => {
       userInfo.textContent = `Logged in as: ${user.username}`;
       userInfo.style.display = "inline";
       logoutButton.style.display = "inline-block";
-      showView("chat");
-      // Clear previous messages and start a new chat session
-      chatBox.innerHTML = "";
-      await startChatSession(); // Explicitly start chat
+      showView("dashboard"); // Show dashboard instead of chat
+      initDashboard(); // Initialize dashboard
     } catch (error) {
       console.error("Failed to fetch user info:", error);
       // Token might be invalid/expired
@@ -359,6 +369,77 @@ document.addEventListener("DOMContentLoaded", () => {
       messageInput.focus();
     }
   };
+
+  // --- Dashboard Logic ---
+
+  const initDashboard = () => {
+    // Initialize progress chart
+    chartScript.onload = () => {
+      const ctx = document.getElementById("progressChart").getContext("2d");
+      new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+          datasets: [
+            {
+              label: "Mental Health Score",
+              data: [7, 6, 8, 5, 7],
+              borderColor: "#2575fc",
+              tension: 0.3,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+    };
+
+    // Load emergency contacts
+    loadEmergencyContacts();
+  };
+
+  const loadEmergencyContacts = async () => {
+    const contactsList = document.getElementById("contactsList");
+    // Example contacts - replace with API call in production
+    const contacts = [
+      { name: "Dr. Smith", phone: "+1234567890" },
+      { name: "Local Crisis Center", phone: "+9876543210" },
+    ];
+
+    contactsList.innerHTML = contacts
+      .map(
+        (contact) => `
+      <div class="contact-item">
+        <div>
+          <strong>${contact.name}</strong><br>
+          ${contact.phone}
+        </div>
+        <button class="edit-contact-btn">Edit</button>
+      </div>
+    `
+      )
+      .join("");
+  };
+
+  const startTest = (testId) => {
+    showView("chat");
+    messageInput.value = testId;
+    handleSendMessage();
+  };
+
+  // Event Listeners for test cards
+  testCards.forEach((card) => {
+    card.querySelector(".start-test-btn").addEventListener("click", () => {
+      startTest(card.dataset.test);
+    });
+  });
+
+  addContactBtn.addEventListener("click", () => {
+    // Implementation for adding new contact
+    // You can show a modal or form here
+  });
 
   // --- Event Listeners ---
   loginForm.addEventListener("submit", handleLogin);
@@ -444,7 +525,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // --- Initial Check ---
   // Check if user is already logged in on page load
   if (bearerToken) {
-    fetchUserInfoAndSetupChat(); // Fetch user info and switch to chat view
+    fetchUserInfoAndSetupChat(); // Fetch user info and switch to dashboard view
   } else {
     showView("auth"); // Otherwise, show auth forms
   }
